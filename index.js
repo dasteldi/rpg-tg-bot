@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const uri = process.env.MONGODB_URI || 'mongodb://new1:27017/bot_db';
 const client = new MongoClient(uri);
 
 let db;

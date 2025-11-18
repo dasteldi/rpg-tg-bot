@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: bot_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+    networks:
+      - bot-network
+
+  bot:
+    build: .
+    container_name: tg-bot
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - MONGODB_URI=mongodb://mongodb:27017/bot_db
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - bot-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  bot-network:
+    driver: bridge
